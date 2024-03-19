@@ -1,8 +1,18 @@
+import Head from "next/head"
+
 import AllPosts from "../../components/posts/all-posts"
 import { getAllPosts } from "../../lib/posts-util"
 
-function AllPostsPage({posts}) {
-    return <AllPosts posts={posts} />
+export default function AllPostsPage({posts}) {
+    return (
+        <>
+            <Head>
+                <title>All posts</title>
+                <meta name="description" content="A list all programing posts"/>
+            </Head>
+            <AllPosts posts={posts} />
+        </>
+    )
 }
 
 export function getStaticProps() {
@@ -15,5 +25,3 @@ export function getStaticProps() {
     }
     
 }
-
-export default AllPostsPage
