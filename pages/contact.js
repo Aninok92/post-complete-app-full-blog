@@ -1,4 +1,4 @@
-import ContactForm from "../components/posts/contact/contact-form"
+import ContactForm from "../components/contact/contact-form"
 
 function ContactPage(params) {
     return <ContactForm/>
