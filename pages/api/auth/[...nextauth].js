@@ -3,7 +3,7 @@ import { connectToDB } from '../../../lib/db'
 import { verifyPassword } from '../../../lib/auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 
-export default NextAuth({
+export const authOptions =({
     session: {
         strategy: "jwt",
     },
@@ -31,7 +31,7 @@ export default NextAuth({
                         throw new Error('Could not log you in')
                     }
 
-                    console.log('email', {email: user.email})
+                    //console.log('email', {email: user.email})
 
                     return { email: user.email }
                 } catch (error) {
@@ -45,3 +45,5 @@ export default NextAuth({
         })
     ]
 })
+
+export default NextAuth(authOptions)
