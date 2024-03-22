@@ -9,14 +9,7 @@ export default async function handler(req, res) {
         return
     }
 
-    console.log('req', req)
-    console.log('res', res)
-    console.log('authOptions', authOptions)
-
-    const session = await getServerSession({ req, res, authOptions})
-
-    // console.log('req', req)
-    // console.log('session', session)
+    const session = await getServerSession(req, res, authOptions)
 
     if(!session) {
         res.status(401).json({ message: 'Not authenticated' })
@@ -60,5 +53,5 @@ const hashedPassword = await hashPassword(newPassword)
 
    
     client.close()
-    res.status(201).json({message : 'Created user!'})
+    res.status(201).json({message : 'Change the password!'})
 }
