@@ -8,6 +8,7 @@ module.exports = (phase) => {
                 mongodb_password: 'k7qH3VAqsw1jJgzB',
                 mongodb_clustername: 'cluster0',
                 mongodb_database: 'my-site-dev',
+                NEXTAUTH_SECRET: 'upYyhOxRV/I0T5l5BrjI5+ZNF19CevZbFzFOW9IinVU='
             }
         }
     }
@@ -18,6 +19,7 @@ module.exports = (phase) => {
             mongodb_password: 'k7qH3VAqsw1jJgzB',
             mongodb_clustername: 'cluster0',
             mongodb_database: 'my-site',
+            NEXTAUTH_SECRET: 'upYyhOxRV/I0T5l5BrjI5+ZNF19CevZbFzFOW9IinVU='
         }
     }
 }
