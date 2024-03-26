@@ -5,7 +5,6 @@ import { useRouter } from 'next/router';
 import classes from './auth-form.module.css';
 
 async function createUser(email, password) {
-  console.log(email, password)
   const response = await fetch('/api/auth/signup', {
     method: 'POST',
     body: JSON.stringify({email, password}),
@@ -51,12 +50,9 @@ function AuthForm() {
       if(!result.error) {
         router.replace('/profile')
       }
-
-      console.log(result)
     } else {
     try {
       const result = await createUser(enteredEmail,enteredPassword)
-      console.log(result)
     } catch(err) {
       console.log(err)
     }

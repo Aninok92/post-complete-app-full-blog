@@ -8,15 +8,24 @@ function AuthPage() {
   const [ isLoading, setIsLoading ] = useState(true)
   const router = useRouter()
 
-useEffect(()=> {
-  getSession().then(session => {
-    if(session) {
-      router.replace('/')
-    } else {
-      setIsLoading(false)
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const session = await getSession();
+        if (session) {
+          router.replace('/');
+        } else {
+          setIsLoading(false);
+        }
+      } catch (error) {
+        console.error('Error fetching session:', error);
+        setIsLoading(false);
+      }
     }
-  })
-}, [router])
+  
+    fetchData();
+  
+  }, [router]);
 
 if(isLoading) {
   return <p>Loading...</p>

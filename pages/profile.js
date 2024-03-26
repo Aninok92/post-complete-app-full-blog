@@ -1,4 +1,5 @@
-import { getSession } from 'next-auth/react';
+import { authOptions } from './api/auth/[...nextauth]'
+import { getServerSession } from 'next-auth/next';
 import UserProfile from '../components/profile/user-profile';
 
 function ProfilePage() {
@@ -6,9 +7,7 @@ function ProfilePage() {
 }
 
 export async function getServerSideProps(context) {
-  const session = await getSession({req: context.req})
-
-  console.log('aaaaa', session)
+ const session = await getServerSession(context.req, context.res, authOptions)
 
   if(!session) {
     return {

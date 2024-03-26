@@ -20,9 +20,6 @@ export default async function handler(req, res) {
     const oldPassword = req.body.oldPassword
     const newPassword = req.body.newPassword
 
-    console.log('0', newPassword)
-    console.log('1', oldPassword)
-
     const client = await connectToDB()
 
     const db = client.db(process.env.mongodb_database)
