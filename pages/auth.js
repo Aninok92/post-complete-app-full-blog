@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
+import { getSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 
 import AuthForm from '../components/auth/auth-form';
-import { getSession } from 'next-auth/react';
 
 function AuthPage() {
   const [ isLoading, setIsLoading ] = useState(true)
@@ -12,6 +12,7 @@ function AuthPage() {
     async function fetchData() {
       try {
         const session = await getSession();
+        console.log('session', session)
         if (session) {
           router.replace('/');
         } else {
@@ -30,8 +31,6 @@ function AuthPage() {
 if(isLoading) {
   return <p>Loading...</p>
 }
-
-
 
   return <AuthForm />;
 }

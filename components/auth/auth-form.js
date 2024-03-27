@@ -22,6 +22,18 @@ async function createUser(email, password) {
   return data
 }
 
+async function signInUser(email, password, router) {
+  const result = await signIn('credentials', {
+    redirect: false,
+    email: email,
+    password: password
+  })
+
+  if(!result.error) {
+    router.replace('/profile')
+  }
+}
+
 function AuthForm() {
   const emailInputRef = useRef()
   const passwordInputRef = useRef()
@@ -41,18 +53,11 @@ function AuthForm() {
     const enteredPassword = passwordInputRef.current.value
 
     if(isLogin) {
-      const result = await signIn('credentials', {
-        redirect: false,
-        email: enteredEmail,
-        password: enteredPassword
-      })
-
-      if(!result.error) {
-        router.replace('/profile')
-      }
+      await signInUser(enteredEmail,enteredPassword, router)
     } else {
     try {
-      const result = await createUser(enteredEmail,enteredPassword)
+      await createUser(enteredEmail,enteredPassword)
+      await signInUser(enteredEmail,enteredPassword, router)
     } catch(err) {
       console.log(err)
     }
