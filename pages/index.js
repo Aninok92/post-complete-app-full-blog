@@ -1,31 +1,33 @@
-import Head from "next/head"
+import Head from "next/head";
 
-import FeaturedPosts from "../components/home-page/featured-posts"
-import Hero from "../components/home-page/hero"
-import { getFeaturedPosts } from '../lib/posts-util'
+import FeaturedPosts from "../components/home-page/featured-posts";
+import Hero from "../components/home-page/hero";
+import { getFeaturedPosts } from "../lib/posts-util";
 
 function HomePage({ posts }) {
-    return <>
-        <Head>
-          <title>Nina's blog</title>
-          <meta
-            name="description"
-            content="I post about programing and web development"
-          />
-        </Head>
-        <Hero />
-        <FeaturedPosts posts={posts}/>
+  return (
+    <>
+      <Head>
+        <title>Nina's blog</title>
+        <meta
+          name="description"
+          content="I post about programing and web development"
+        />
+      </Head>
+      <Hero />
+      <FeaturedPosts posts={posts} />
     </>
+  );
 }
 
 export function getStaticProps() {
-    const featuredPosts = getFeaturedPosts()
+  const featuredPosts = getFeaturedPosts();
 
-    return {
-        props: {
-          posts: featuredPosts
-        },
-      }
+  return {
+    props: {
+      posts: featuredPosts,
+    },
+  };
 }
 
-export default HomePage
+export default HomePage;
