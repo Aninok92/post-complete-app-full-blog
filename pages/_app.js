@@ -3,6 +3,8 @@ import { SessionProvider } from "next-auth/react";
 
 import Layout from "../components/layout/layout";
 import "../styles/globals.css";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   return (
@@ -12,6 +14,18 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
           <meta name="viewport" content="width=device-width, initial-scale=1" />
         </Head>
         <Component {...pageProps} />
+        <ToastContainer
+          position="bottom-center"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="dark"
+        />
       </Layout>
     </SessionProvider>
   );
