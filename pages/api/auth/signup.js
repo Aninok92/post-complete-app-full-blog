@@ -4,40 +4,50 @@ import { isValidEmail, isValidPassword } from "../../../lib/validtion";
 
 export default async function handler(req, res) {
   if (req.method === "POST") {
-    const data = req.body;
+    let client;
+    try {
+      const data = req.body;
 
-    const { email, password } = data;
+      const { email, password } = data;
 
-    if (
-      !isValidEmail(email) || !isValidPassword(password)
-    ) {
-      res.status(422).json({
-        message:
-          "Invalid input - password should also be at least 7 characters long",
+      if (!isValidEmail(email) || !isValidPassword(password)) {
+        res.status(422).json({
+          message:
+            "Invalid input - password should also be at least 7 characters long",
+        });
+        return;
+      }
+
+      client = await connectToDB();
+
+      const db = client.db(process.env.mongodb_database);
+
+      const existingUser = await db
+        .collection("users")
+        .findOne({ email: email });
+
+      if (existingUser) {
+        res.status(422).json({ message: "User exist already" });
+        return;
+      }
+
+      const hashedPassword = await hashPassword(password);
+
+      const result = await db.collection("users").insertOne({
+        email,
+        password: hashedPassword,
       });
-      return;
+
+      res.status(201).json({ message: "Created user!" });
+    } catch (error) {
+      console.error("Error creating user:", error);
+      res.status(500).json({ message: "Internal server error" });
+    } finally {
+      if (client) {
+        client.close();
+      }
     }
-
-    const client = await connectToDB();
-
-    const db = client.db(process.env.mongodb_database);
-
-    const existingUser = await db.collection("users").findOne({ email: email });
-
-    if (existingUser) {
-      res.status(422).json({ message: "User exist already" });
-      client.close();
-      return;
-    }
-
-    const hashedPassword = await hashPassword(password);
-
-    const result = await db.collection("users").insertOne({
-      email,
-      password: hashedPassword,
-    });
-
-    res.status(201).json({ message: "Created user!" });
-    client.close();
+  } else {
+    res.status(405).json({ message: "Method Not Allowed" });
   }
 }

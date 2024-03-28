@@ -7,6 +7,7 @@ import { isValidPassword } from "../../../lib/validtion";
 
 export default async function handler(req, res) {
   if (req.method !== "PATCH") {
+    res.status(405).json({ message: "Method Not Allowed" });
     return;
   }
 
@@ -18,51 +19,57 @@ export default async function handler(req, res) {
   }
 
   const userEmail = session.user.email;
-  const {oldPassword, newPassword} = req.body;
+  const { oldPassword, newPassword } = req.body;
 
-    if (
-      !isValidPassword(oldPassword) || !isValidPassword(newPassword)
-    ) {
-      res.status(422).json({
-        message:
-          "Invalid input - password should also be at least 7 characters long",
-      });
+  if (!isValidPassword(oldPassword) || !isValidPassword(newPassword)) {
+    res.status(422).json({
+      message:
+        "Invalid input - password should also be at least 7 characters long",
+    });
+    return;
+  }
+  let client;
+  try {
+    client = await connectToDB();
+
+    const db = client.db(process.env.mongodb_database);
+
+    const existingUser = await db
+      .collection("users")
+      .findOne({ email: userEmail });
+
+    if (!existingUser) {
+      res.status(401).json({ message: "User not found" });
       return;
     }
 
-  const client = await connectToDB();
+    const currentPassword = existingUser.password;
 
-  const db = client.db(process.env.mongodb_database);
+    const passwordAreEqual = await verifyPassword(oldPassword, currentPassword);
 
-  const existingUser = await db
-    .collection("users")
-    .findOne({ email: userEmail });
+    if (!passwordAreEqual) {
+      res
+        .status(403)
+        .json({ message: "Incorrect password. Please try again." });
+      return;
+    }
 
-  if (!existingUser) {
-    res.status(401).json({ message: "User not found" });
-    client.close();
-    return;
+    const hashedPassword = await hashPassword(newPassword);
+
+    const result = await db.collection("users").updateOne(
+      {
+        email: userEmail,
+      },
+      { $set: { password: hashedPassword } },
+    );
+
+    res.status(201).json({ message: "Change the password!" });
+  } catch (error) {
+    console.error("Error updating password:", error);
+    res.status(500).json({ message: "Internal server error" });
+  } finally {
+    if (client) {
+      client.close();
+    }
   }
-
-  const currentPassword = existingUser.password;
-
-  const passwordAreEqual = await verifyPassword(oldPassword, currentPassword);
-
-  if (!passwordAreEqual) {
-    res.status(403).json({ message: "Incorrect password. Please try again." });
-    client.close();
-    return;
-  }
-
-  const hashedPassword = await hashPassword(newPassword);
-
-  const result = await db.collection("users").updateOne(
-    {
-      email: userEmail,
-    },
-    { $set: { password: hashedPassword } },
-  );
-
-  client.close();
-  res.status(201).json({ message: "Change the password!" });
 }
