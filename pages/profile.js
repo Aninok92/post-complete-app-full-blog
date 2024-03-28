@@ -1,5 +1,6 @@
-import { authOptions } from "./api/auth/[...nextauth]";
 import { getServerSession } from "next-auth/next";
+
+import { authOptions } from "./api/auth/[...nextauth]";
 import UserProfile from "../components/profile/user-profile";
 
 function ProfilePage() {

@@ -1,7 +1,8 @@
 import NextAuth from "next-auth";
+import CredentialsProvider from "next-auth/providers/credentials";
+
 import { connectToDB } from "../../../lib/db";
 import { verifyPassword } from "../../../lib/auth";
-import CredentialsProvider from "next-auth/providers/credentials";
 
 export const authOptions = {
   session: {

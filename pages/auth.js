@@ -12,7 +12,6 @@ function AuthPage() {
     async function fetchData() {
       try {
         const session = await getSession();
-        console.log("session", session);
         if (session) {
           router.replace("/");
         } else {

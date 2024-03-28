@@ -1,21 +1,8 @@
 import { useState, useEffect } from "react";
+
 import classes from "./contact-form.module.css";
 import Notification from "../ui/notification";
-
-async function sendContactData(email, name, message) {
-  const response = await fetch("api/contact", {
-    method: "POST",
-    body: JSON.stringify({ email, name, message }),
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-
-  const data = await response.json();
-  if (!response.ok) {
-    throw new Error(data.message || "Something went wrong");
-  }
-}
+import { sendContactData } from "../../utils/apiUtils";
 
 export default function ContactForm() {
   const [email, setEmail] = useState("");

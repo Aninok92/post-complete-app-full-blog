@@ -1,10 +1,10 @@
 import Head from "next/head";
 import { SessionProvider } from "next-auth/react";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
 
 import Layout from "../components/layout/layout";
 import "../styles/globals.css";
-import "react-toastify/dist/ReactToastify.css";
-import { ToastContainer } from "react-toastify";
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   return (

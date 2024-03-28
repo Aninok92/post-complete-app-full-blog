@@ -1,5 +1,6 @@
 import { useRef } from "react";
-import { toast } from "react-toastify";
+
+import { changeProfilePassword } from "../../utils/apiUtils";
 import classes from "./profile-form.module.css";
 
 function ProfileForm() {
@@ -9,25 +10,10 @@ function ProfileForm() {
   async function handlerSubmit(e) {
     e.preventDefault();
 
-    const response = await fetch("/api/user/change-password", {
-      method: "PATCH",
-      body: JSON.stringify({
-        newPassword: newPassword.current.value,
-        oldPassword: oldPassword.current.value,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const enterdNewPassword = newPassword.current.value;
+    const enteredOldPassword = oldPassword.current.value;
 
-    const data = await response.json();
-
-    if (response.ok) {
-      toast.success("Password successfully changed!");
-    } else {
-      console.error("Failed to change password:", data.error);
-      toast.error("Failed to change password. Please try again.");
-    }
+    changeProfilePassword(enterdNewPassword, enteredOldPassword);
   }
 
   return (

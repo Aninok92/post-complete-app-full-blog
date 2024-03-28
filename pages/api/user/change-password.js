@@ -1,6 +1,6 @@
-import { authOptions } from "../auth/[...nextauth]";
 import { getServerSession } from "next-auth/next";
 
+import { authOptions } from "../auth/[...nextauth]";
 import { connectToDB } from "../../../lib/db";
 import { hashPassword, verifyPassword } from "../../../lib/auth";
 
@@ -19,6 +19,19 @@ export default async function handler(req, res) {
   const userEmail = session.user.email;
   const oldPassword = req.body.oldPassword;
   const newPassword = req.body.newPassword;
+
+    if (
+      !oldPassword ||
+      oldPassword.trim().length < 7 ||
+      !newPassword ||
+      newPassword.trim().length < 7
+    ) {
+      res.status(422).json({
+        message:
+          "Invalid input - password should also be at least 7 characters long",
+      });
+      return;
+    }
 
   const client = await connectToDB();
 
