@@ -1,5 +1,6 @@
 import { hashPassword } from "../../../lib/auth";
 import { connectToDB } from "../../../lib/db";
+import { isValidEmail, isValidPassword } from "../../../lib/validtion";
 
 export default async function handler(req, res) {
   if (req.method === "POST") {
@@ -8,10 +9,7 @@ export default async function handler(req, res) {
     const { email, password } = data;
 
     if (
-      !email ||
-      !email.includes("@") ||
-      !password ||
-      password.trim().length < 7
+      !isValidEmail(email) || !isValidPassword(password)
     ) {
       res.status(422).json({
         message:

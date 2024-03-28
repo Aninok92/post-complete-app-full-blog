@@ -3,6 +3,7 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "../auth/[...nextauth]";
 import { connectToDB } from "../../../lib/db";
 import { hashPassword, verifyPassword } from "../../../lib/auth";
+import { isValidPassword } from "../../../lib/validtion";
 
 export default async function handler(req, res) {
   if (req.method !== "PATCH") {
@@ -17,14 +18,10 @@ export default async function handler(req, res) {
   }
 
   const userEmail = session.user.email;
-  const oldPassword = req.body.oldPassword;
-  const newPassword = req.body.newPassword;
+  const {oldPassword, newPassword} = req.body;
 
     if (
-      !oldPassword ||
-      oldPassword.trim().length < 7 ||
-      !newPassword ||
-      newPassword.trim().length < 7
+      !isValidPassword(oldPassword) || !isValidPassword(newPassword)
     ) {
       res.status(422).json({
         message:
@@ -52,7 +49,7 @@ export default async function handler(req, res) {
   const passwordAreEqual = await verifyPassword(oldPassword, currentPassword);
 
   if (!passwordAreEqual) {
-    res.status(403).json({ message: "Invalid password" });
+    res.status(403).json({ message: "Incorrect password. Please try again." });
     client.close();
     return;
   }
