@@ -1,9 +1,24 @@
 import Head from "next/head";
+import { GetStaticProps } from 'next'
 
 import AllPosts from "../../components/posts/all-posts";
 import { getAllPosts } from "../../lib/posts-util";
 
-export default function AllPostsPage({ posts }) {
+interface Post {
+  title: string
+  image: string
+  date: string
+  excerpt: string
+  isFeatured: boolean
+  content: string
+  slug: string
+}
+
+interface AllPostsPageProps {
+  posts: Post[];
+}
+
+export default function AllPostsPage({posts}: AllPostsPageProps): any {
   return (
     <>
       <Head>
@@ -12,10 +27,10 @@ export default function AllPostsPage({ posts }) {
       </Head>
       <AllPosts posts={posts} />
     </>
-  );
+  )
 }
 
-export function getStaticProps() {
+export const getStaticProps: GetStaticProps = () => {
   const allPosts = getAllPosts();
 
   return {
