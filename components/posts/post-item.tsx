@@ -1,9 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import { PostDetailProps } from "../../types/types";
 import classes from "./post-item.module.css";
 
-export default function PostItem({ post }) {
+export default function PostItem({ post }: PostDetailProps) {
   const { title, image, excerpt, date, slug } = post;
 
   const formatedDate = new Date(date).toLocaleDateString("en-Us", {

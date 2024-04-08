@@ -1,10 +1,12 @@
 import Head from "next/head";
+import { GetStaticProps } from 'next'
 
 import FeaturedPosts from "../components/home-page/featured-posts";
 import Hero from "../components/home-page/hero";
 import { getFeaturedPosts } from "../lib/posts-util";
+import { PostsProps } from "../types/types";
 
-function HomePage({ posts }) {
+function HomePage({ posts }: PostsProps) {
   return (
     <>
       <Head>
@@ -20,7 +22,7 @@ function HomePage({ posts }) {
   );
 }
 
-export function getStaticProps() {
+export const getStaticProps: GetStaticProps = () => {
   const featuredPosts = getFeaturedPosts();
 
   return {

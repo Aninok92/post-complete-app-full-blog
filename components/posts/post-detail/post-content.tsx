@@ -7,11 +7,12 @@ import css from "react-syntax-highlighter/dist/cjs/languages/prism/css";
 
 import PostHeader from "./post-header";
 import classes from "./post-content.module.css";
+import { PostDetailProps } from "../../../types/types";
 
 SyntaxHighlighter.registerLanguage("js", js);
 SyntaxHighlighter.registerLanguage("css", css);
 
-export default function PostContent({ post }) {
+export default function PostContent({ post }: PostDetailProps) {
   const { slug, image, title, content } = post;
 
   const customRenders = {

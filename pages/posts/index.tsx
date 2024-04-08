@@ -3,22 +3,9 @@ import { GetStaticProps } from 'next'
 
 import AllPosts from "../../components/posts/all-posts";
 import { getAllPosts } from "../../lib/posts-util";
+import { PostsProps } from "../../types/types";
 
-interface Post {
-  title: string
-  image: string
-  date: string
-  excerpt: string
-  isFeatured: boolean
-  content: string
-  slug: string
-}
-
-interface AllPostsPageProps {
-  posts: Post[];
-}
-
-export default function AllPostsPage({posts}: AllPostsPageProps): any {
+export default function AllPostsPage({ posts }: PostsProps) {
   return (
     <>
       <Head>

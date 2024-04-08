@@ -1,9 +1,12 @@
 import Head from "next/head";
+import { GetStaticProps, GetStaticPaths } from 'next'
+
 
 import PostContent from "../../components/posts/post-detail/post-content";
 import { getPostData, getPostsFiles } from "../../lib/posts-util";
+import { PostDetailProps } from "../../types/types";
 
-export default function PostDetailPage({ post }) {
+export default function PostDetailPage({ post }: PostDetailProps) {
   return (
     <>
       <Head>
@@ -15,11 +18,11 @@ export default function PostDetailPage({ post }) {
   );
 }
 
-export function getStaticProps(context) {
+export const getStaticProps: GetStaticProps = (context) => {
   const { params } = context;
   const { slug } = params;
 
-  const postData = getPostData(slug);
+  const postData = getPostData(slug as string);
 
   return {
     props: {
@@ -29,7 +32,7 @@ export function getStaticProps(context) {
   };
 }
 
-export function getStaticPaths(params) {
+export const getStaticPaths: GetStaticPaths = () => {
   const postFileNames = getPostsFiles();
   const slugs = postFileNames.map((fileName) => fileName.replace(/\.md$/, ""));
 
