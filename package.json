@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "format": "prettier --write \"pages/**/*.js\" \"helpers/**/*.js\" \"components/**/*.js\""
+    "format": "prettier --write \"pages/**/*.{js,ts,tsx}\" \"lib/**/*.{js,ts,tsx}\" \"components/**/*.{js,ts,tsx}\""
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

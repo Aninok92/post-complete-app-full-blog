@@ -1,11 +1,16 @@
 import { getServerSession } from "next-auth/next";
+import type { NextApiRequest, NextApiResponse } from "next";
 
 import { authOptions } from "../auth/[...nextauth]";
 import { connectToDB } from "../../../lib/db";
 import { hashPassword, verifyPassword } from "../../../lib/auth";
 import { isValidPassword } from "../../../lib/validtion";
+import { Data } from "../../../types/types";
 
-export default async function handler(req, res) {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse<Data>,
+) {
   if (req.method !== "PATCH") {
     res.status(405).json({ message: "Method Not Allowed" });
     return;

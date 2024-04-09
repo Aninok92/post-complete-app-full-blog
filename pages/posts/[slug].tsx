@@ -1,6 +1,5 @@
 import Head from "next/head";
-import { GetStaticProps, GetStaticPaths } from 'next'
-
+import { GetStaticProps, GetStaticPaths } from "next";
 
 import PostContent from "../../components/posts/post-detail/post-content";
 import { getPostData, getPostsFiles } from "../../lib/posts-util";
@@ -30,7 +29,7 @@ export const getStaticProps: GetStaticProps = (context) => {
     },
     revalidate: 600,
   };
-}
+};
 
 export const getStaticPaths: GetStaticPaths = () => {
   const postFileNames = getPostsFiles();
@@ -40,4 +39,4 @@ export const getStaticPaths: GetStaticPaths = () => {
     paths: slugs.map((slug) => ({ params: { slug } })),
     fallback: false,
   };
-}
+};

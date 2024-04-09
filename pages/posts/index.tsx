@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { GetStaticProps } from 'next'
+import { GetStaticProps } from "next";
 
 import AllPosts from "../../components/posts/all-posts";
 import { getAllPosts } from "../../lib/posts-util";
@@ -14,7 +14,7 @@ export default function AllPostsPage({ posts }: PostsProps) {
       </Head>
       <AllPosts posts={posts} />
     </>
-  )
+  );
 }
 
 export const getStaticProps: GetStaticProps = () => {
@@ -25,4 +25,4 @@ export const getStaticProps: GetStaticProps = () => {
       posts: allPosts,
     },
   };
-}
+};

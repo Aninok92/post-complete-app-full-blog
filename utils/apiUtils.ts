@@ -1,8 +1,9 @@
 import { toast } from "react-toastify";
 import { signIn } from "next-auth/react";
+import { NextRouter } from "next/router";
 
 // AUTH
-export async function createUser(email, password) {
+export async function createUser(email: string, password: string) {
     const response = await fetch("/api/auth/signup", {
       method: "POST",
       body: JSON.stringify({ email, password }),
@@ -24,7 +25,7 @@ export async function createUser(email, password) {
     return data;
   }
   
-export async function signInUser(email, password, router) {
+export async function signInUser(email: string, password: string, router: NextRouter) {
     const response = await signIn("credentials", {
       redirect: false,
       email: email,
@@ -41,7 +42,7 @@ export async function signInUser(email, password, router) {
     }
   }
 
-  export async function changeProfilePassword(newPassword, oldPassword) {
+  export async function changeProfilePassword(newPassword: string, oldPassword: string) {
     const response = await fetch("/api/user/change-password", {
       method: "PATCH",
       body: JSON.stringify({
@@ -66,7 +67,7 @@ export async function signInUser(email, password, router) {
   }
 
 // CONTACT
- export async function sendContactData(email, name, message) {
+ export async function sendContactData(email: string, name: string, message: string) {
     const response = await fetch("api/contact", {
       method: "POST",
       body: JSON.stringify({ email, name, message }),

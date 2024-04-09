@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { GetStaticProps } from 'next'
+import { GetStaticProps } from "next";
 
 import FeaturedPosts from "../components/home-page/featured-posts";
 import Hero from "../components/home-page/hero";
@@ -30,6 +30,6 @@ export const getStaticProps: GetStaticProps = () => {
       posts: featuredPosts,
     },
   };
-}
+};
 
 export default HomePage;

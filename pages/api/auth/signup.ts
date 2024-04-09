@@ -1,8 +1,14 @@
+import type { NextApiRequest, NextApiResponse } from "next";
+
 import { hashPassword } from "../../../lib/auth";
 import { connectToDB } from "../../../lib/db";
 import { isValidEmail, isValidPassword } from "../../../lib/validtion";
+import { Data } from "../../../types/types";
 
-export default async function handler(req, res) {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse<Data>,
+) {
   if (req.method === "POST") {
     let client;
     try {

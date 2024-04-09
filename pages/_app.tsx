@@ -6,7 +6,9 @@ import { ToastContainer } from "react-toastify";
 import Layout from "../components/layout/layout";
 import "../styles/globals.css";
 
-function MyApp({ Component, pageProps: { session, ...pageProps } }) {
+import type { AppProps } from "next/app";
+
+function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   return (
     <SessionProvider session={session}>
       <Layout>

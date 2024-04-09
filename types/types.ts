@@ -9,9 +9,27 @@ export interface Post {
   }
   
   export interface PostsProps {
-    posts: Post[];
+    posts: Post[]
   }
 
   export type PostDetailProps = {
     post: Post
+  }
+
+  export type NotificationTypes = {
+    status: "success" | "pending" | "error"
+    title: string
+    message: string
+  }
+
+  export type Message = {
+    id?: number
+    email: string
+    name: string
+    message: string
+  }
+  
+  export type Data = {
+    message: string
+    data?: Message
   }
