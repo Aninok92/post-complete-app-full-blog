@@ -16,8 +16,10 @@ export interface Post {
     post: Post
   }
 
+  export type StatusTypes = "success" | "pending" | "error" 
+
   export type NotificationTypes = {
-    status: "success" | "pending" | "error"
+    status: StatusTypes
     title: string
     message: string
   }
@@ -33,3 +35,14 @@ export interface Post {
     message: string
     data?: Message
   }
+
+  export interface LayoutProps {
+    children: React.ReactNode
+  }
+
+  export interface MongoUriComponents {
+    username: string;
+    password: string;
+    clustername: string;
+  }
+  

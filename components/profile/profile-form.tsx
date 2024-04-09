@@ -3,15 +3,15 @@ import { useRef } from "react";
 import { changeProfilePassword } from "../../utils/apiUtils";
 import classes from "./profile-form.module.css";
 
-function ProfileForm() {
-  const newPassword = useRef();
-  const oldPassword = useRef();
+function ProfileForm(): JSX.Element {
+  const newPassword = useRef(null);
+  const oldPassword = useRef(null);
 
-  async function handlerSubmit(e) {
+  async function handlerSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    const enterdNewPassword = newPassword.current.value;
-    const enteredOldPassword = oldPassword.current.value;
+    const enterdNewPassword: string = newPassword.current.value;
+    const enteredOldPassword: string = oldPassword.current.value;
 
     changeProfilePassword(enterdNewPassword, enteredOldPassword);
   }

@@ -2,7 +2,7 @@ import Image from "next/image";
 
 import classes from "./hero.module.css";
 
-function Hero() {
+function Hero(): JSX.Element {
   return (
     <section className={classes.hero}>
       <div className={classes.image}>

@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 
 import AuthForm from "../components/auth/auth-form";
 
-function AuthPage() {
+function AuthPage(): JSX.Element {
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
 

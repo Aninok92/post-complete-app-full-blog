@@ -6,7 +6,7 @@ import Hero from "../components/home-page/hero";
 import { getFeaturedPosts } from "../lib/posts-util";
 import { PostsProps } from "../types/types";
 
-function HomePage({ posts }: PostsProps) {
+function HomePage({ posts }: PostsProps): JSX.Element {
   return (
     <>
       <Head>

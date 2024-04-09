@@ -3,13 +3,14 @@ import { useState, useEffect } from "react";
 import classes from "./contact-form.module.css";
 import Notification from "../ui/notification";
 import { sendContactData } from "../../utils/apiUtils";
+import { NotificationTypes, StatusTypes } from "../../types/types";
 
-export default function ContactForm() {
+export default function ContactForm(): JSX.Element {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");
 
-  const [requestStatus, setRequestStatus] = useState();
+  const [requestStatus, setRequestStatus] = useState<StatusTypes | null>(null);
   const [requestError, setRequestError] = useState();
 
   useEffect(() => {
@@ -23,7 +24,7 @@ export default function ContactForm() {
     }
   }, [requestStatus]);
 
-  async function submitMessageHandler(e) {
+  async function submitMessageHandler(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setRequestStatus("pending");
     try {
@@ -38,7 +39,7 @@ export default function ContactForm() {
     }
   }
 
-  let notification;
+  let notification: NotificationTypes | null = null;
 
   if (requestStatus === "pending") {
     notification = {
@@ -94,7 +95,6 @@ export default function ContactForm() {
           <label htmlFor="message">Your message</label>
           <textarea
             id="message"
-            rows="5"
             required
             value={message}
             onChange={(e) => setMessage(e.target.value)}

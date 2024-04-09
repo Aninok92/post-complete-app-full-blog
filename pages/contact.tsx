@@ -2,7 +2,7 @@ import Head from "next/head";
 
 import ContactForm from "../components/contact/contact-form";
 
-export default function ContactPage() {
+export default function ContactPage(): JSX.Element {
   return (
     <>
       <Head>

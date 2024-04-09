@@ -1,14 +1,20 @@
 import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
+import { useRouter } from "next/router";
 
 import classes from "./main-navigation.module.css";
 import Logo from "./logo";
 
-export default function MainNavigation({ children }) {
+export default function MainNavigation() {
+  const router = useRouter();
   const { data: session, status } = useSession();
 
   function logoutHandler() {
     signOut();
+  }
+
+  function isActive(route: string) {
+    return router.route === route ? classes.active : undefined;
   }
 
   return (
@@ -19,19 +25,27 @@ export default function MainNavigation({ children }) {
       <nav>
         <ul>
           <li>
-            <Link href="/posts">Posts</Link>
+            <Link className={isActive("/posts")} href="/posts">
+              Posts
+            </Link>
           </li>
           <li>
-            <Link href="/contact">Contact</Link>
+            <Link className={isActive("/contact")} href="/contact">
+              Contact
+            </Link>
           </li>
           {!session && status !== "loading" && (
             <li>
-              <Link href="/auth">Login</Link>
+              <Link className={isActive("/auth")} href="/auth">
+                Login
+              </Link>
             </li>
           )}
           {session && (
             <li>
-              <Link href="/profile">Profile</Link>
+              <Link className={isActive("/profile")} href="/profile">
+                Profile
+              </Link>
             </li>
           )}
           {session && (

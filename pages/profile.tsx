@@ -4,7 +4,7 @@ import { authOptions } from "./api/auth/[...nextauth]";
 import UserProfile from "../components/profile/user-profile";
 import { GetServerSidePropsContext } from "next";
 
-function ProfilePage() {
+function ProfilePage(): JSX.Element {
   return <UserProfile />;
 }
 

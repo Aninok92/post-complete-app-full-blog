@@ -20,11 +20,11 @@
     margin: 0 var(--size-4);
   }
   
-  .header a {
-    color: var(--color-grey-100);
+  .active {
     font-size: var(--size-4);
+    cursor: not-allowed;
   }
-  
+
   .header a:hover,
   .header a:active,
   .header a.active {
