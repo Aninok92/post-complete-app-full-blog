@@ -4,6 +4,7 @@ import classes from "./contact-form.module.css";
 import Notification from "../ui/notification";
 import { sendContactData } from "../../utils/apiUtils";
 import { NotificationTypes, StatusTypes } from "../../types/types";
+import { notificationMessage } from "../../lib/notification-message";
 
 export default function ContactForm(): JSX.Element {
   const [email, setEmail] = useState("");
@@ -39,31 +40,7 @@ export default function ContactForm(): JSX.Element {
     }
   }
 
-  let notification: NotificationTypes | null = null;
-
-  if (requestStatus === "pending") {
-    notification = {
-      status: "pending",
-      title: "Sending message",
-      message: "Your message is ont its way!",
-    };
-  }
-
-  if (requestStatus === "success") {
-    notification = {
-      status: "success",
-      title: "Success!",
-      message: "Message sent successfully!",
-    };
-  }
-
-  if (requestStatus === "error") {
-    notification = {
-      status: "error",
-      title: "Error",
-      message: requestError,
-    };
-  }
+  let notification: NotificationTypes = notificationMessage(requestStatus, requestError)
 
   return (
     <section className={classes.contact}>
