@@ -1,19 +1,24 @@
-import NextAuth, { Session } from "next-auth";
-import { SessionStrategy } from "next-auth/next";
+import NextAuth, { Session, SessionStrategy } from "next-auth";
 import { MongoClient } from "mongodb";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 import { connectToDB } from "../../../lib/db";
 import { verifyPassword } from "../../../lib/auth";
 
+interface User {
+  id: string;
+  email: string;
+  password: string
+}
+
 export const authOptions = {
   session: {
-    strategy: "jwt" as SessionStrategy, // Ensure correct type for strategy
+    strategy: "jwt" as SessionStrategy,
   },
   secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
     async session({ session }: { session: Session }): Promise<Session> {
-      const newUser: { email: string } = {
+      const newUser = {
         email: session.user.email,
       };
 
@@ -27,7 +32,7 @@ export const authOptions = {
       async authorize(credentials) {
         let client: MongoClient | null = null;
         try {
-          client = await connectToDB(); // Assuming connectToDB returns a MongoClient
+          client = await connectToDB();
           const userCollection = client
             .db(process.env.mongodb_database)
             .collection("users");
@@ -42,14 +47,14 @@ export const authOptions = {
 
           const isValid = await verifyPassword(
             credentials.password,
-            user.password, // Assuming user.password is of string type
+            user.password
           );
 
           if (!isValid) {
             throw new Error("Could not log you in");
           }
 
-          return { email: user.email };
+          return user as unknown as User;
         } catch (error) {
           throw error;
         } finally {
@@ -58,6 +63,7 @@ export const authOptions = {
           }
         }
       },
+      credentials: undefined
     }),
   ],
 };
